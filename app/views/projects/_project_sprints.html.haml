@@ -1,0 +1,26 @@
+.list-group
+  - @recent_sprints.each do |sprint|
+    %a.list-group-item{:url => "/show_sprint_summary/#{sprint.id}", :remote => true}
+      %span= "#{sprint.name}"
+      %p
+      %span= "#{sprint.start_date} - #{sprint.end_date}"
+
+:javascript
+  $(document).ready(function (){
+    $(".list-group-item").first().addClass("active");
+    $("a.list-group-item").click(function(){
+      $("a.list-group-item.active").removeClass('active');
+      $(this).addClass('active');
+
+      $.ajax({
+       url : $(this).attr("url"),
+       type : 'GET',
+       async : false,
+       success : function(response) {myAjaxVariable = response;},
+        });
+    })
+
+
+
+
+  })

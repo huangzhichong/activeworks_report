@@ -1,0 +1,15 @@
+= simple_form_for(@task) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :summary
+    = f.input :assignee
+    = f.input :jira_ticket
+    = f.input :status
+    = f.input :estimated_time
+    = f.input :spent_time
+    = f.input :number_of_test_case
+    = f.input :task_type_id
+
+  .form-actions
+    = f.button :submit

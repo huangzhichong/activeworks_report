@@ -1,0 +1,66 @@
+.sprint_summary_chart
+
+.sprint_summary_table
+  %table.table.table-responsive.table-striped.table-hover
+    %thead
+      %tr
+        %th Assignee
+        %th Jira ID
+        %th Summary
+        %th Status
+        %th ETA
+        %th Spent
+        %th Automated 
+    %tbody
+      - unless sprint.nil?
+        - sprint.tasks.each do |task|
+          %tr
+            %td
+              = task.assignee
+            %td
+              = task.jira_ticket
+            %td{"title"=>"#{task.summary}"}
+              = short_summary_text(task.summary)
+            %td
+              = task.status
+            %td
+              = task.estimated_time
+            %td
+              = task.spent_time
+            %td
+              = task.number_of_test_case
+                
+:javascript
+    $(document).ready(function () {
+        //$('[data-toggle="tooltip"]').tooltip()
+        // Build the chart
+        $('div.sprint_summary_chart').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Summary of Automation Task in #{sprint.name}'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                data: #{format_summary_of_tasks(sprint.summary_of_tasks)}
+            }]
+        });
+    });

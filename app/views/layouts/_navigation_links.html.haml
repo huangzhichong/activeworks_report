@@ -1,0 +1,11 @@
+%li.dropdown
+  %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+    Select Project
+    %span.caret
+  %ul.dropdown-menu{:role => "menu"}
+    - Project.all.each do |project|
+      %li
+        = link_to project.name, project_path(project.id)
+
+        
+

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @sprint.name
+%p
+  %b Project:
+  = @sprint.project_id
+
+= link_to 'Edit', edit_sprint_path(@sprint)
+\|
+= link_to 'Back', sprints_path

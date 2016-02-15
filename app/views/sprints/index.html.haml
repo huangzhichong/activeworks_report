@@ -1,0 +1,23 @@
+%h1 Listing sprints
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Project
+      %th
+      %th
+      %th
+
+  %tbody
+    - @sprints.each do |sprint|
+      %tr
+        %td= sprint.name
+        %td= sprint.project_id
+        %td= link_to 'Show', sprint
+        %td= link_to 'Edit', edit_sprint_path(sprint)
+        %td= link_to 'Destroy', sprint, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Sprint', new_sprint_path

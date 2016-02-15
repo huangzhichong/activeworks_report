@@ -1,0 +1,35 @@
+%h1 Listing tasks
+
+%table
+  %thead
+    %tr
+      %th Summary
+      %th Assignee
+      %th Jira ticket
+      %th Status
+      %th Estimated time
+      %th Spent time
+      %th Number of test case
+      %th Task type
+      %th
+      %th
+      %th
+
+  %tbody
+    - @tasks.each do |task|
+      %tr
+        %td= task.summary
+        %td= task.assignee
+        %td= task.jira_ticket
+        %td= task.status
+        %td= task.estimated_time
+        %td= task.spent_time
+        %td= task.number_of_test_case
+        %td= task.task_type_id
+        %td= link_to 'Show', task
+        %td= link_to 'Edit', edit_task_path(task)
+        %td= link_to 'Destroy', task, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Task', new_task_path

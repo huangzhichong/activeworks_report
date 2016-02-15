@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b Summary:
+  = @task.summary
+%p
+  %b Assignee:
+  = @task.assignee
+%p
+  %b Jira ticket:
+  = @task.jira_ticket
+%p
+  %b Status:
+  = @task.status
+%p
+  %b Estimated time:
+  = @task.estimated_time
+%p
+  %b Spent time:
+  = @task.spent_time
+%p
+  %b Number of test case:
+  = @task.number_of_test_case
+%p
+  %b Task type:
+  = @task.task_type_id
+
+= link_to 'Edit', edit_task_path(@task)
+\|
+= link_to 'Back', tasks_path

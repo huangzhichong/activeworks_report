@@ -1,0 +1,31 @@
+.authform
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f|
+    %h3 注册新用户
+    = devise_error_messages!
+    .form-group
+      = f.label :name, "姓名"
+      = f.text_field :name, :autofocus => true, class: 'form-control',"data-validation" => "required, length","data-validation-length"=>"max16","data-validation-error-msg-length"=>"用户名长度不能超过16个字符"
+    .form-group
+      = f.label :email, "邮件地址"
+      = f.email_field :email, class: 'form-control',"data-validation"=>"email"
+    .form-group
+      = f.label :password, "密码"
+      = f.password_field :password, class: 'form-control',"data-validation"=>"length", "data-validation-length"=>"min8"
+    .form-group
+      = f.label :password_confirmation, "再次确认密码"
+      = f.password_field :password_confirmation, class: 'form-control',"data-validation"=>"confirmation", "data-validation-confirm"=>"password"
+    = f.submit '注册', :class => 'button right'
+
+:javascript
+  var customMessage = {
+      requiredFields: '你还没有回答这个问题',
+      badTime: '输入的时间有误',
+      badEmail: '输入的邮件地址格式不正确',
+      notConfirmed: '确认密码不一致',      
+  };
+
+  $.validate({
+    modules : 'security',
+    language : customMessage
+  });
+

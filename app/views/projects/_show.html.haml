@@ -1,0 +1,9 @@
+-if @sprint and @sprint.tasks.size>0
+  .row
+    .col-sm-3.col-md-2.sidebar
+      =render "project_sprints"
+    .col-sm-9.col-md-10.main
+      .sprint-summary        
+        =render :partial => "sprint_summary", :locals => {:sprint => @sprint}
+- else
+  %H3 No sprint data for selected projects                   
