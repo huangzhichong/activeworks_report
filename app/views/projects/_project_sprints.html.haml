@@ -1,14 +1,16 @@
 .list-group
   - @recent_sprints.each do |sprint|
-    %a.list-group-item{:url => "/show_sprint_summary/#{sprint.id}", :remote => true}
-      %span= "#{sprint.name}"
+    %a.sprint.list-group-item{:url => "/show_sprint_summary/#{sprint.id}", :remote => true}
+      %h5= "#{sprint.name}"
       %p
       %span= "#{sprint.start_date} - #{sprint.end_date}"
+  .new-sprint.list-group-item
+    = link_to "Manage Sprints", project_sprints_path(@project)
 
 :javascript
   $(document).ready(function (){
-    $(".list-group-item").first().addClass("active");
-    $("a.list-group-item").click(function(){
+    $("a.sprint.list-group-item").first().addClass("active");
+    $("a.sprint.list-group-item").click(function(){
       $("a.list-group-item.active").removeClass('active');
       $(this).addClass('active');
 

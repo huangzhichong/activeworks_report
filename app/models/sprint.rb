@@ -3,6 +3,9 @@ class Sprint < ActiveRecord::Base
   has_many :tasks
   validates_uniqueness_of :name, :scope => :project_id
 
+  def total_hours
+    self.tasks.sum(:spent_time)
+  end
   def summary_of_tasks
     summary =  Hash.new
     TaskType.all.each do |task|
@@ -19,8 +22,12 @@ class Sprint < ActiveRecord::Base
       summary[t.assignee] ||= {}
       summary[t.assignee]['spent_time'] ||= 0
       summary[t.assignee]['number_of_test_case'] ||= 0
-      summary[t.assignee]['spent_time'] += t.spent_time
-      summary[t.assignee]['number_of_test_case'] += t.number_of_test_case
+      unless t.spent_time.nil?
+        summary[t.assignee]['spent_time'] += t.spent_time
+      end
+      unless t.number_of_test_case.nil?
+        summary[t.assignee]['number_of_test_case'] += t.number_of_test_case
+      end
     end
     summary
   end

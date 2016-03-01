@@ -13,11 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require 'china_city/jquery.china_city'
 //= require jquery.form-validator
 //= require cocoon
 //= require_tree .
 
 //= require highcharts
 //= require highcharts/highcharts-more
-//= require highcharts/modules/exporting
+

@@ -10,11 +10,8 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
-    @sprint = @project.sprints.last
-    if @sprint
-      @sprint_task_summary = @sprint.summary_of_tasks
-      @recent_sprints = @project.sprints.last(10)
-    end
+    @recent_sprints = @project.sprints.where("start_date <= ?", Date.today).order("start_date desc").first(10)
+    @sprint = @recent_sprints.first if @recent_sprints.size > 0
   end
 
   # GET /projects/new

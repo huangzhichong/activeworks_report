@@ -1,23 +1,27 @@
-%h1 Listing sprints
+.container
+  %h5="Manage Sprints of #{@project.name}"
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Project
-      %th
-      %th
-      %th
-
-  %tbody
-    - @sprints.each do |sprint|
+  %table.table.table-striped.table-hover
+    %thead
       %tr
-        %td= sprint.name
-        %td= sprint.project_id
-        %td= link_to 'Show', sprint
-        %td= link_to 'Edit', edit_sprint_path(sprint)
-        %td= link_to 'Destroy', sprint, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %th Name
+        %th Ticket NO.
+        %th Start Date
+        %th End Date
+        %th
 
-%br
+    %tbody
+      - @sprints.each do |sprint|
+        %tr
+          %td= sprint.name
+          %td= sprint.jira_issue_id
+          %td= sprint.start_date
+          %td= sprint.end_date
+          %td
+            = link_to 'Show', sprint
+            = link_to 'Edit', edit_sprint_path(sprint)
+            = link_to 'Destroy', sprint, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-= link_to 'New Sprint', new_sprint_path
+  %br
+
+  = link_to 'New Sprint', new_sprint_path

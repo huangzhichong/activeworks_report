@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   resources :sprints
   resources :task_types
   resources :tasks
-  resources :projects
+  resources :projects do
+    resources :sprints
+  end
   root to: 'visitors#index'
   devise_for :users
   resources :users

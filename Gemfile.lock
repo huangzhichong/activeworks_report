@@ -54,9 +54,6 @@ GEM
       railties (>= 3.1)
     builder (3.2.2)
     byebug (8.2.1)
-    china_city (0.0.4)
-      jquery-rails
-      rails (>= 3.1.0)
     cocoon (1.2.6)
     coderay (1.1.0)
     coffee-rails (4.1.0)
@@ -238,7 +235,6 @@ DEPENDENCIES
   bootstrap-sass
   bootswatch-rails
   byebug
-  china_city
   cocoon
   coffee-rails (~> 4.1.0)
   devise

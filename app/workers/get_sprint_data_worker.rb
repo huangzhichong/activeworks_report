@@ -39,9 +39,9 @@ class GetSprintDataWorker
             t.summary = sub_info['summary']
             t.assignee = sub_info['assignee']
             t.status = sub_info['status']
-            t.estimated_time = sub_info['estimated_time']
-            t.spent_time= sub_info['spent_time']
-            t.number_of_test_case= sub_info['number_of_test_case']
+            t.estimated_time = (sub_info['estimated_time'].nil? ? 0 : sub_info['estimated_time'])
+            t.spent_time= (sub_info['spent_time'].nil? ? 0 : sub_info['spent_time'])
+            t.number_of_test_case=sub_info['number_of_test_case']
             t.task_type_id =tt.id
             t.save
           end

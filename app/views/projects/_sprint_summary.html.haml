@@ -1,66 +1,114 @@
-.sprint_summary_chart
+.row
+  .col-sm-8
+    .sprint_summary_chart
+  .col-sm-4
 
-.sprint_summary_table
-  %table.table.table-responsive.table-striped.table-hover
-    %thead
-      %tr
-        %th Assignee
-        %th Jira ID
-        %th Summary
-        %th Status
-        %th ETA
-        %th Spent
-        %th Automated 
-    %tbody
-      - unless sprint.nil?
-        - sprint.tasks.each do |task|
+    %table.sprint_summary_table.table.table-responsive.table-striped.table-bordered.table-hover
+      %thead{:style => "background-color:#6EABE4"}
+        %tr
+          %th Task Type
+          %th Hours Spent
+      %tbody
+        - sprint.summary_of_tasks.each do |k,v|
           %tr
             %td
-              = task.assignee
+              = k
             %td
-              = task.jira_ticket
-            %td{"title"=>"#{task.summary}"}
-              = short_summary_text(task.summary)
+              = "#{'%.1f' % (v.to_f/3600)}"
+        %tr.info
+          %td Total Hours
+          %td
+            = "#{'%.1f' % (sprint.total_hours.to_f/3600)}"  
+    %table.sprint_automation_table.table.table-responsive.table-striped.table-bordered.table-hover
+      %thead{:style => "background-color:#6EABE4"}
+        %tr
+          %th Name
+          %th Completed TCs
+          %th Hours Spent 
+      %tbody
+        - sprint.summary_of_automation_tasks.each do |k,v|
+          %tr
             %td
-              = task.status
+              = k
             %td
-              = task.estimated_time
+              = "#{v['number_of_test_case']}"
             %td
-              = task.spent_time
-            %td
-              = task.number_of_test_case
-                
+              = "#{'%.1f' % (v['spent_time'].to_f/3600)}"
+.row
+  .sprint_tasks_table
+    %table.table.table-responsive.table-striped.table-hover
+      %thead{:style => "background-color:#6EABE4"}
+        %tr
+          %th Assignee
+          %th Jira ID
+          %th Summary
+          %th Status
+          %th ETA
+          %th Spent
+          %th Automated 
+      %tbody
+        - unless sprint.nil?
+          - sprint.tasks.each do |task|
+            %tr
+              %td
+                = task.assignee
+              %td
+                = task.jira_ticket
+              %td{"title"=>"#{task.summary}"}
+                = short_summary_text(task.summary)
+              %td
+                = task.status
+              %td
+                = "#{'%.1f' % (task.estimated_time.to_f/3600)}"
+              %td
+                =  "#{'%.1f' % (task.spent_time.to_f/3600)}"
+              %td
+                = task.number_of_test_case
+                  
 :javascript
-    $(document).ready(function () {
-        //$('[data-toggle="tooltip"]').tooltip()
-        // Build the chart
-        $('div.sprint_summary_chart').highcharts({
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                type: 'pie'
-            },
-            title: {
-                text: 'Summary of Automation Task in #{sprint.name}'
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: false
-                    },
-                    showInLegend: true
-                }
-            },
-            series: [{
-                name: 'Brands',
-                colorByPoint: true,
-                data: #{format_summary_of_tasks(sprint.summary_of_tasks)}
-            }]
-        });
+  $(document).ready(function() {
+    $('div.sprint_summary_chart').highcharts({
+      legend: {
+        layout: 'vertical',
+        backgroundColor: '#FFFFFF',
+        floating: true,
+        align: 'right',
+        verticalAlign: 'bottom',
+        x: 0,
+        y: 0,
+        labelFormatter: function() {
+          return this.name;
+        }
+      },
+
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+      },
+      title: {
+        text: '#{sprint.project.name} - Automation Task in #{sprint.name}'
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.hour:.1f} hours',
+          },
+          showInLegend: true
+        }
+      },
+      series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: #{format_summary_of_tasks(sprint.summary_of_tasks)}
+      }]
     });
+  });
+

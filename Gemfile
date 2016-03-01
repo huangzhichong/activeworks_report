@@ -10,7 +10,6 @@ gem 'mysql2', '~> 0.3.13'
 # for dynamic nested forms using jQuery
 gem 'cocoon'
 gem 'uuid'
-gem 'china_city'
 gem 'sidekiq'
 gem 'rest-client'
 

@@ -4,7 +4,8 @@ class SprintsController < ApplicationController
   # GET /sprints
   # GET /sprints.json
   def index
-    @sprints = Sprint.all
+    @project = Project.find(params[:project_id])
+    @sprints = @project.sprints
   end
 
   # GET /sprints/1
@@ -62,13 +63,13 @@ class SprintsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_sprint
-      @sprint = Sprint.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_sprint
+    @sprint = Sprint.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def sprint_params
-      params.require(:sprint).permit(:name, :project_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def sprint_params
+    params.require(:sprint).permit(:name, :project_id)
+  end
 end
